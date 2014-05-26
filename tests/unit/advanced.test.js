@@ -29,6 +29,7 @@ module.exports = {
 	canDetermineFileType: function (test) {
 		test.expect(5);
 		readdir(rootAdvanced, {stat: true, filter: true}, function (err, results) {
+			console.log(results);
 			test.equal(err, null);
 			test.equal(results.length, 7);
 			results.forEach(function (result) {
