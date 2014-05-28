@@ -1,4 +1,5 @@
-var libPath = require("path");
+var libPath = require("path"),
+	Buffer = require("buffer").Buffer;
 
 var libTools = require("../../lib/tools"),
 	readdir = require("../../lib/readdir-plus");
@@ -16,6 +17,32 @@ module.exports = {
 			test.equal(err, null);
 			test.equal(results[0].content, "simple1");
 			test.strictEqual(results[1].content, "");
+			test.done();
+		});
+	},
+	canDistinguishBetweenTextAndBinaries: function (test) {
+		test.expect(6);
+		var opts = {
+			stat: false,
+			content: {
+				enabled: true,
+				asText: [function (f) {
+					// Treat files without extension as text files (in addition to others)
+					return !f.extension;
+				}],
+				asBinary: /.*/
+			}
+		};
+		readdir(rootAdvanced, opts, function (err, results) {
+			test.equal(err, null);
+			results.forEach(function (file) {
+				if (file.name === "file3.bin") {
+					test.ok(file.content instanceof Buffer);
+				}
+				else {
+					test.ok(libTools.isString(file.content));
+				}
+			});
 			test.done();
 		});
 	}
