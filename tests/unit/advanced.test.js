@@ -1,5 +1,4 @@
-var libPath = require("path"),
-	exec = require("child_process").exec;
+var libPath = require("path");
 
 var libTools = require("../../lib/tools"),
 	readdir = require("../../lib/readdir-plus");
@@ -8,30 +7,8 @@ var rootSimple = libPath.resolve(__dirname + "/../root/simple"),
 	rootAdvanced = libPath.resolve(__dirname + "/../root/advanced");
 
 module.exports = {
-	setUp: function (done) {
-		exec(libPath.resolve(__dirname, "../root/setup.sh"), function (err, _, stderr) {
-			if (stderr) {
-				err = new Error(stderr);
-			}
-			if (err) {
-				console.error(err);
-				process.exit(1);
-			}
-			done();
-		});
-	},
-	tearDown: function (done) {
-		exec(libPath.resolve(__dirname, "../root/teardown.sh"), function (err, _, stderr) {
-			if (stderr) {
-				err = new Error(stderr);
-			}
-			if (err) {
-				console.error(err);
-				process.exit(1);
-			}
-			done();
-		});
-	},
+	setUp: libTools.execOrDie.bind(null, libPath.resolve(__dirname, "../root/setup.sh")),
+	tearDown: libTools.execOrDie.bind(null, libPath.resolve(__dirname, "../root/teardown.sh")),
 	canWorkWithoutStatForSimplestRequests: function (test) {
 		test.expect(2);
 		var options = {
@@ -70,14 +47,6 @@ module.exports = {
 			test.done();
 		});
 	},
-	/*canReadContent: function (test) {
-		test.expect(5);
-		readdir(rootSimple, {stat: false, content: true}, function (err, results) {
-			test.equal(err, null);
-			console.log(results);
-			test.done();
-		});
-	},*/
 	canProduceTreeWithDetailsReturnType: function (test) {
 		test.expect(10);
 		readdir(rootAdvanced, {tree: true, stat: false}, function (err, results) {
