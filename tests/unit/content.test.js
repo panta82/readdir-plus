@@ -25,7 +25,6 @@ module.exports = {
 		var opts = {
 			stat: false,
 			content: {
-				enabled: true,
 				asText: [function (f) {
 					// Treat files without extension as text files (in addition to others)
 					return !f.extension;
@@ -43,6 +42,16 @@ module.exports = {
 					test.ok(libTools.isString(file.content));
 				}
 			});
+			test.done();
+		});
+	},
+	willSkipOverTooLargeFiles: function (test) {
+		test.expect(4);
+		readdir(rootSimple, { content: { maxSize: 5 }}, function (err, results) {
+			test.equal(err, null);
+			test.equal(results.length, 2);
+			test.strictEqual(results[0].content, undefined);
+			test.ok(libTools.isString(results[1].content));
 			test.done();
 		});
 	}
