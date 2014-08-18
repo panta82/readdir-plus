@@ -8,7 +8,7 @@ fs.readdir with additional options. Features:
 - Loads stat for each found file / directory. Optionally disable for better performance.
 - Detailed filtering by file type, regex and/or callback
 - Produce tree structure or flat list
-- Synchronous option *(TODO)*
+- Synchronous option
 - Load content of found files (binary or text determined by extension) *(TODO)* 
 - Zero dependencies
 - Tests
@@ -52,7 +52,7 @@ Output:
 	]
 ```
 
-##### TODO: more examples coming
+##### For more examples, see unit tests
 
 **************
 
