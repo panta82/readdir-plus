@@ -2,7 +2,7 @@
 	"name": "readdir-plus",
 	"version": "0.3.10",
 	"description": "fs.readdir with additional options: recursive, details, get stat, load content and more",
-	"main": "index.js",
+	"main": "lib/readdir-plus.js",
 	"directories": {
 		"test": "tests"
 	},
