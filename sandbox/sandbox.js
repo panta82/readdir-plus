@@ -12,9 +12,14 @@ if (false) {
 	});
 }
 
-if (true) {
+if (false) {
 	readdir("../tests/root/simple", {stat: true, filter: true}, function (err, results) {
 		console.log(err,results);
 
 	});
+}
+
+if (true) {
+	var results = readdir("../tests/root/simple", {stat: true, sync: true});
+	console.log(results);
 }
