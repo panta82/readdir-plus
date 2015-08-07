@@ -21,7 +21,7 @@ module.exports = {
 		});
 	},
 	canDistinguishBetweenTextAndBinaries: function (test) {
-		test.expect(6);
+		test.expect(7);
 		var opts = {
 			stat: false,
 			content: {
@@ -35,7 +35,7 @@ module.exports = {
 		readdir(rootAdvanced, opts, function (err, results) {
 			test.equal(err, null);
 			results.forEach(function (file) {
-				if (file.name === "file3.bin") {
+				if (file.name === "file3.bin" || file.name === "file1.lnk") {
 					test.ok(file.content instanceof Buffer);
 				}
 				else {

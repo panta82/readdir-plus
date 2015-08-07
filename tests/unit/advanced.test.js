@@ -48,15 +48,14 @@ module.exports = {
 		});
 	},
 	canProduceTreeWithDetailsReturnType: function (test) {
-		test.expect(10);
+		test.expect(9);
 		readdir(rootAdvanced, {tree: true, stat: false}, function (err, results) {
 			test.equal(err, null);
 			test.equal(results.length, 6);
 
 			results.forEach(function (result) {
 				if (result.name === "sub1") {
-					test.equal(result.content.length, 1);
-					test.equal(result.content[0].name, "file3.bin");
+					test.equal(result.content.length, 2);
 				}
 				else if (result.name === "sub500") {
 					test.equal(result.content.length, 1);
@@ -73,7 +72,7 @@ module.exports = {
 		});
 	},
 	canProduceTreeWithOtherReturnTypes: function (test) {
-		test.expect(8);
+		test.expect(7);
 		readdir(rootAdvanced, {tree: true, stat: false, return: "names"}, function (err, results) {
 			test.equal(err, null);
 			test.equal(results.length, 6);
@@ -81,15 +80,16 @@ module.exports = {
 			var subHash = {};
 			results.forEach(function (result) {
 				if (libTools.isArray(result)) {
-					var subHashKey = String(result[0]);
-					subHash[subHashKey] = (subHash[subHashKey] || 0) + 1;
+					for (var i = 0; i < result.length; i++) {
+						var subHashKey = String(result[i]);
+						subHash[subHashKey] = (subHash[subHashKey] || 0) + 1;
+					}
 				} else {
 					test.ok(libTools.isString(result));
 				}
 			});
 			test.equal(subHash["file3.bin"], 1);
 			test.equal(subHash["hidden3.txt"], 1);
-			test.equal(subHash["undefined"], 1);
 
 			test.done();
 		});

@@ -52,5 +52,15 @@ module.exports = {
 			test.equal(results[1], libPath.resolve(rootSimple, "subdir1/file2.txt"));
 			test.done();
 		});
+	},
+	canExcludeDirsWhenRecursing: function (test) {
+		test.expect(3);
+		readdir(rootSimple, {excludeDirs: ["subdir1"]}, function (err, results) {
+			test.equal(err, null);
+			test.equal(results.length, 1);
+			test.equal(results[0].name, "file1.txt");
+
+			test.done();
+		});
 	}
 };
