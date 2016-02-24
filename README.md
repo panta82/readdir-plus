@@ -22,35 +22,52 @@ fs.readdir with additional options. Features:
 var readdir = require("readdir-plus");
 
 readdir("/path/to/directory", function (err, files) {
-	files.forEach(console.log);
+	//... do something with files
 });
 
 ```
 
-### Detailed results
+By default, readdir will recurse all subdirectories and present each found file as a hash with the following properties:
 
 ```javascript
-readdir("/path/to/directory", {return: "details", stat: "true", content: "true"}, function (err, results) {
-	require("util").inspect(results);
+{
+	name: "file.txt",
+	path: "/home/myname/path/to/directory/subdir/file.txt",
+	relativePath: "subdir/file.txt", 
+	extension: ".txt",
+	type: "file", // see vars.FILE_TYPES for what else can be here 
+	stat: { /* instance of node's fs.Stats class for this file */ }
+}
+```
+
+See [here](https://nodejs.org/api/fs.html#fs_class_fs_stats) for details on node's `fs.Stats` class.
+
+### Load file content
+
+```javascript
+readdir("/path/to/directory", {content: "true"}, function (err, results) {
+	console.log(results[0].content);
 });
 ```
+This prints out the contents of the first found file. Contents are loaded as strings or Buffers, based on extension sniffing.
 
-Output:
+### Just the file list
 
+```javascript
+readdir("/path/to/directory", {return: "names", recursive: false}, callback);
 ```
-	[
-		{
-			name: "file.txt",
-			path: "/home/myname/path/to/directory/subdir/file.txt",
-			relativePath: "subdir/file.txt", 
-			extension: ".txt",
-			type: "file",
-			stat: { /* see node documentation for properties found here */ },
-			content: "Content of the file here"
-		},
-		{ /*... */ }
-	]
+
+Returns
+
+```javascript
+[
+	"file1.txt",
+	"file2.txt",
+	//...
+]
 ```
+
+This now works the same as native readdir function.
 
 ##### For more examples, see unit tests
 
