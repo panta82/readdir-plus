@@ -72,16 +72,17 @@ module.exports = {
 		});
 	},
 	canProduceTreeWithOtherReturnTypes: function (test) {
-		test.expect(7);
+		test.expect(10);
 		readdir(rootAdvanced, {tree: true, stat: false, return: "names"}, function (err, results) {
 			test.equal(err, null);
 			test.equal(results.length, 6);
 
 			var subHash = {};
 			results.forEach(function (result) {
-				if (libTools.isArray(result)) {
-					for (var i = 0; i < result.length; i++) {
-						var subHashKey = String(result[i]);
+				if (libTools.isAnonObject(result)) {
+					test.ok(libTools.isString(result.name));
+					for (var i = 0; i < result.content.length; i++) {
+						var subHashKey = String(result.content[i]);
 						subHash[subHashKey] = (subHash[subHashKey] || 0) + 1;
 					}
 				} else {
