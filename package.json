@@ -1,6 +1,6 @@
 {
   "name": "readdir-plus",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "fs.readdir with additional options: recursive, details, get stat, load content and more",
   "main": "lib/readdir-plus.js",
   "directories": {
@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/panta82/readdir-plus",
   "devDependencies": {
-    "nodeunit": "^0.11.3"
+    "nodeunit": "^0.11.3",
+    "prettier": "^1.19.1"
   }
 }

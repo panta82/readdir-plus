@@ -21,7 +21,7 @@ module.exports = {
 		});
 	},
 	canDistinguishBetweenTextAndBinaries: function (test) {
-		test.expect(7);
+		test.expect(8);
 		var opts = {
 			stat: false,
 			content: {
