@@ -28,6 +28,6 @@
   },
   "homepage": "https://github.com/panta82/readdir-plus",
   "devDependencies": {
-    "nodeunit": "^0.9.1"
+    "nodeunit": "^0.11.3"
   }
 }
